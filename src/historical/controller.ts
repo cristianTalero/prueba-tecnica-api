@@ -63,8 +63,6 @@ export class HistoricalController implements IHistorical {
   }
 
   getTramosCliente(req: Request, res: Response) {
-    console.log(this);
-
     const { fechaFinal, fechaInicial } = getDates(req);
 
     const consultaTramosCliente = `
