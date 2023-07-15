@@ -6,12 +6,11 @@ import { IHistorical } from "./contract";
 function getDates({ body }: Request) {
   return {
     fechaInicial: body.fechaInicial,
-    fechaFinal: body.fechaFinal
-  }
+    fechaFinal: body.fechaFinal,
+  };
 }
 
 export class HistoricalController implements IHistorical {
-
   getHistTramos(req: Request, res: Response) {
     const { fechaFinal, fechaInicial } = getDates(req);
 
@@ -25,15 +24,13 @@ export class HistoricalController implements IHistorical {
       JOIN perdidas_tramo p ON c.Fecha = p.Fecha
       AND c.Linea = p.Linea WHERE c.Fecha
       BETWEEN '${fechaInicial}' AND '${fechaFinal}'
-      GROUP BY c.Linea ORDER BY c.Linea;`
-    ;
-
+      GROUP BY c.Linea ORDER BY c.Linea;`;
     db.query(consultaTramos, (err, data) => {
       if (err) {
         throw err;
       }
 
-      res.json(data)
+      res.json(data);
     });
   }
 
@@ -55,9 +52,7 @@ export class HistoricalController implements IHistorical {
       JOIN perdidas_tramo p ON c.Fecha = p.Fecha
       AND c.Linea = p.Linea WHERE c.Fecha
       BETWEEN '${fechaInicial}' AND '${fechaFinal}'
-      GROUP BY c.Linea ORDER BY c.Linea`
-    ;
-
+      GROUP BY c.Linea ORDER BY c.Linea`;
     db.query(consultaCliente, (err, data) => {
       if (err) {
         throw err;
@@ -86,9 +81,7 @@ export class HistoricalController implements IHistorical {
         UNION ALL SELECT "Industrial" AS TipoConsumo, pt.Linea,
         pt.Industrial AS Perdidas FROM perdidas_tramo pt WHERE
         pt.Fecha BETWEEN '${fechaInicial}' AND '${fechaFinal}'
-      ) AS combined_data ORDER BY TipoConsumo, Perdidas DESC LIMIT 20`
-    ;
-
+      ) AS combined_data ORDER BY TipoConsumo, Perdidas DESC LIMIT 20`;
     db.query(consultaTramosCliente, (err, data) => {
       if (err) {
         throw err;
@@ -97,4 +90,4 @@ export class HistoricalController implements IHistorical {
       res.json(data);
     });
   }
-};
+}

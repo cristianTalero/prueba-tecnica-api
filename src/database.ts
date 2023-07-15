@@ -12,15 +12,14 @@ export function connect() {
     host: process.env.DATABASE_HOST,
     database: process.env.DATABASE_NAME,
     user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD
+    password: process.env.DATABASE_PASSWORD,
   });
 
-
-  db.connect(err => {
+  db.connect((err) => {
     if (err) {
       throw err;
     }
 
-    console.log('Conexión a DB MYSQL exitosa');
+    console.log("Conexión a DB MYSQL exitosa");
   });
 }

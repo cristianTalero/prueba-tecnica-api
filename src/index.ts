@@ -1,8 +1,8 @@
 import express from "express";
 import morgan from "morgan";
-import { config as env } from 'dotenv';
+import { config as env } from "dotenv";
 import { connect } from "./database";
-import { router as historicalRouter } from './historical'
+import { router as historicalRouter } from "./historical";
 
 // Environment variables
 env();
@@ -16,7 +16,7 @@ const app = express();
 connect();
 
 // Middleware
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(express.json());
 
 // Router (Modules)
