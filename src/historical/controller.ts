@@ -25,6 +25,7 @@ export class HistoricalController implements IHistorical {
       AND c.Linea = p.Linea WHERE c.Fecha
       BETWEEN '${fechaInicial}' AND '${fechaFinal}'
       GROUP BY c.Linea ORDER BY c.Linea;`;
+
     db.query(consultaTramos, (err, data) => {
       if (err) {
         throw err;
@@ -53,6 +54,7 @@ export class HistoricalController implements IHistorical {
       AND c.Linea = p.Linea WHERE c.Fecha
       BETWEEN '${fechaInicial}' AND '${fechaFinal}'
       GROUP BY c.Linea ORDER BY c.Linea`;
+
     db.query(consultaCliente, (err, data) => {
       if (err) {
         throw err;
@@ -80,6 +82,7 @@ export class HistoricalController implements IHistorical {
         pt.Industrial AS Perdidas FROM perdidas_tramo pt WHERE
         pt.Fecha BETWEEN '${fechaInicial}' AND '${fechaFinal}'
       ) AS combined_data ORDER BY TipoConsumo, Perdidas DESC LIMIT 20`;
+
     db.query(consultaTramosCliente, (err, data) => {
       if (err) {
         throw err;
