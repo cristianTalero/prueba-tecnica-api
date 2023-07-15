@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { db } from "../database";
-import { IHistorical } from "./controller.interface";
+import { IHistorical } from "./contract";
 
 /** Get dates from body request */
 function getDates({ body }: Request) {
@@ -10,7 +10,7 @@ function getDates({ body }: Request) {
   }
 }
 
-export class Historical implements IHistorical {
+export class HistoricalController implements IHistorical {
 
   getHistTramos(req: Request, res: Response) {
     const { fechaFinal, fechaInicial } = getDates(req);

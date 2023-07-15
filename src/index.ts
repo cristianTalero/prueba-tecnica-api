@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import { config as env } from 'dotenv';
 import { connect } from "./database";
-import { router } from './routes/routes'
+import { router as historicalRouter } from './historical'
 
 // Environment variables
 env();
@@ -19,8 +19,8 @@ connect();
 app.use(morgan('dev'));
 app.use(express.json());
 
-// Router
-app.use(router);
+// Router (Modules)
+app.use(historicalRouter);
 
 //Iniciar servidor
 app.listen(port, () => console.log(`Servidor en puerto ${port}`));
