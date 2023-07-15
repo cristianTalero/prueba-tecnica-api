@@ -10,9 +10,18 @@ function getDates({ body }: Request) {
   };
 }
 
+/** Manage database error */
+function manageDatabaseError(err: unknown, res: Response) {
+  if (err) {
+    return res.status(500).json({
+      error: "Ocurrio un error inesperado, intentalo de nuevo",
+    });
+  }
+}
+
 export class HistoricalController implements IHistorical {
   getHistTramos(req: Request, res: Response) {
-    const { fechaFinal, fechaInicial } = getDates(req);
+    const { fechaInicial, fechaFinal } = getDates(req);
 
     const consultaTramos = `
       SELECT c.Linea,
@@ -27,16 +36,14 @@ export class HistoricalController implements IHistorical {
       GROUP BY c.Linea ORDER BY c.Linea;`;
 
     db.query(consultaTramos, (err, data) => {
-      if (err) {
-        throw err;
-      }
+      manageDatabaseError(err, res);
 
       res.json(data);
     });
   }
 
   getHistCliente(req: Request, res: Response) {
-    const { fechaFinal, fechaInicial } = getDates(req);
+    const { fechaInicial, fechaFinal } = getDates(req);
 
     const consultaCliente = `
       SELECT c.Linea, SUM(c.Residencial) AS consumo_residencial,
@@ -56,16 +63,14 @@ export class HistoricalController implements IHistorical {
       GROUP BY c.Linea ORDER BY c.Linea`;
 
     db.query(consultaCliente, (err, data) => {
-      if (err) {
-        throw err;
-      }
+      manageDatabaseError(err, res);
 
       res.json(data);
     });
   }
 
   getTramosCliente(req: Request, res: Response) {
-    const { fechaFinal, fechaInicial } = getDates(req);
+    const { fechaInicial, fechaFinal } = getDates(req);
 
     const consultaTramosCliente = `
       SELECT TipoConsumo, Linea, Perdidas
@@ -84,9 +89,7 @@ export class HistoricalController implements IHistorical {
       ) AS combined_data ORDER BY TipoConsumo, Perdidas DESC LIMIT 20`;
 
     db.query(consultaTramosCliente, (err, data) => {
-      if (err) {
-        throw err;
-      }
+      manageDatabaseError(err, res);
 
       res.json(data);
     });
