@@ -37,6 +37,7 @@ export class HistoricalController implements IHistorical {
 
     db.query(consultaTramos, (err, data) => {
       manageDatabaseError(err, res);
+      console.log(data);
 
       res.json(data);
     });
@@ -64,6 +65,7 @@ export class HistoricalController implements IHistorical {
 
     db.query(consultaCliente, (err, data) => {
       manageDatabaseError(err, res);
+      console.log(data);
 
       res.json(data);
     });
@@ -90,6 +92,7 @@ export class HistoricalController implements IHistorical {
 
     db.query(consultaTramosCliente, (err, data) => {
       manageDatabaseError(err, res);
+      console.log(data);
 
       res.json(data);
     });
